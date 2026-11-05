@@ -33,4 +33,20 @@ pipeline {
             }
         }
     }
+    post {
+        success {
+            emailext(
+                subject: "✅ SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                body: "অভিনন্দন ভাই! আপনার Docker CI/CD পাইপলাইন সফলভাবে রান করেছে।\nBuild URL: ${env.BUILD_URL}",
+                to: "milon.mgi@gmail.com"
+            )
+        }
+        failure {
+            emailext(
+                subject: "❌ FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                body: "সতর্কতা! আপনার পাইপলাইন বিল্ড ফেইল করেছে। লগ চেক করুন:\nBuild URL: ${env.BUILD_URL}",
+                to: "milon.mgi@gmail.com"
+            )
+        }
+    }
 }
